@@ -1,3 +1,4 @@
+import { Answer } from "../models/Answer.js";
 import { Question } from "../models/Question.js"
 
 export const getQuestions = async (req, res) => {
@@ -96,16 +97,17 @@ export const downvoteQuestion = async (req, res) => {
 }
 
 export const writeAnswer = async (req, res) => {
-    const { title, answerContent } = req.body;
+    const { title, answerContent, answerAuthor } = req.body;
     const question = await Question.findOne({ title });
     if (!question) return res.status(404).json({
         success: false,
         message: "No such question found"
     });
+    let answer = await Answer.create({ content: answerContent, author: answerAuthor });
     const filter = { title: title };
     const updateDoc = {
         $push: {
-            answers: answerContent
+            answers: answer
         },
     };
     const result = await Question.updateOne(filter, updateDoc);

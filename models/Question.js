@@ -26,7 +26,8 @@ const questionSchema = mongoose.Schema({
         default: 0
     },
     answers: {
-        type: [{ type: String }]
+        // type: [{ type: String }]
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Answer' }]
     },
     comments: {
         type: [{ type: String }]
