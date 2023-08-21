@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { getMyProfile, login, logout, register } from "./controllers/User.js";
 import { isAuthenticated } from "./middlewares/auth.js";
 import cors from "cors";
-import { createQuestion, deleteQuestion, downvoteQuestion, getQuestionByUpvotes, getQuestions, updateQuestion, upvoteQuestion, writeAnswer } from "./controllers/Home.js";
+import { createQuestion, deleteQuestion, downvoteAnswer, downvoteQuestion, getQuestionByUpvotes, getQuestions, updateQuestion, upvoteAnswer, upvoteQuestion, writeAnswer, writeCommentA, writeCommentQ } from "./controllers/Home.js";
 
 const app = express();
 
@@ -32,11 +32,16 @@ app.post("/new", register);
 app.post("/login", login);
 app.get("/me", isAuthenticated, getMyProfile);
 app.get("/logout", logout);
+
 app.get("/getQuestions", getQuestions);
+app.get("/getQuestionsByUpvotes", getQuestionByUpvotes);
 app.post("/createQuestion", createQuestion);
 app.post("/updateQuestion", updateQuestion);
 app.get("/deleteQuestion", deleteQuestion);
 app.post("/upvoteQuestion", upvoteQuestion);
 app.post("/downvoteQuestion", downvoteQuestion);
+app.post("/upvoteAnswer", upvoteAnswer);
+app.post("/downvoteAnswer", downvoteAnswer);
 app.post("/writeAnswer", writeAnswer);
-app.get("/getQuestionsByUpvotes", getQuestionByUpvotes);
+app.post("/writeCommentQ", writeCommentQ);
+app.post("/writeCommentA", writeCommentA);
