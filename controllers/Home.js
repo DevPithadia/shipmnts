@@ -1,4 +1,4 @@
-import { Answer } from "../models/Answer.js";
+import { Answer, Answer } from "../models/Answer.js";
 import { Question } from "../models/Question.js"
 
 export const getQuestions = async (req, res) => {
@@ -96,6 +96,46 @@ export const downvoteQuestion = async (req, res) => {
     });
 }
 
+export const upvoteAnswer = async (req, res) => {
+    const { _id } = req.body;
+    const answer = await Answer.findOne({ _id });
+    if (!answer) return res.status(404).json({
+        success: false,
+        message: "No such answer found"
+    });
+    const filter = { _id: _id };
+    const updateDoc = {
+        $inc: {
+            upvotes: 1
+        },
+    };
+    const result = await Answer.updateOne(filter, updateDoc);
+    res.status(200).json({
+        success: true,
+        message: "Answer upvoted successfully"
+    });
+}
+
+export const downvoteAnswer = async (req, res) => {
+    const { _id } = req.body;
+    const answer = await Answer.findOne({ _id });
+    if (!answer) return res.status(404).json({
+        success: false,
+        message: "No such answer found"
+    });
+    const filter = { _id: _id };
+    const updateDoc = {
+        $inc: {
+            upvotes: -1
+        },
+    };
+    const result = await Answer.updateOne(filter, updateDoc);
+    res.status(200).json({
+        success: true,
+        message: "Answer downvoted successfully"
+    });
+}
+
 export const writeAnswer = async (req, res) => {
     const { title, answerContent, answerAuthor } = req.body;
     const question = await Question.findOne({ title });
@@ -114,5 +154,45 @@ export const writeAnswer = async (req, res) => {
     res.status(200).json({
         success: true,
         message: "Answer added successfully"
+    });
+}
+
+export const writeCommentQ = async (req, res) => {
+    const { title, content } = req.body;
+    const question = await Question.findOne({ title });
+    if (!question) return res.status(404).json({
+        success: false,
+        message: "No such question found"
+    });
+    const filter = { title: title };
+    const updateDoc = {
+        $push: {
+            comments: content
+        },
+    };
+    const result = await Question.updateOne(filter, updateDoc);
+    res.status(200).json({
+        success: true,
+        message: "Comment added successfully"
+    });
+}
+
+export const writeCommentA = async (req, res) => {
+    const { _id, content } = req.body;
+    const answer = await Answer.findOne({ _id });
+    if (!answer) return res.status(404).json({
+        success: false,
+        message: "No such answer found"
+    });
+    const filter = { _id: _id };
+    const updateDoc = {
+        $push: {
+            comments: content
+        },
+    };
+    const result = await Answer.updateOne(filter, updateDoc);
+    res.status(200).json({
+        success: true,
+        message: "Comment added successfully"
     });
 }

@@ -24,6 +24,9 @@ const answerSchema = mongoose.Schema({
     downvotes: {
         type: Number,
         default: 0
+    },
+    comments: {
+        type: [{ type: String }]
     }
 });
 
