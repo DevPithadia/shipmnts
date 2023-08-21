@@ -17,11 +17,19 @@ const questionSchema = mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    votes: {
+    upvotes: {
         type: Number,
+        default: 0
+    },
+    downvotes: {
+        type: Number,
+        default: 0
     },
     answers: {
-        type: String
+        type: [{ type: String }]
+    },
+    comments: {
+        type: [{ type: String }]
     }
 });
 

@@ -65,7 +65,7 @@ export const upvoteQuestion = async (req, res) => {
     const filter = { title: title };
     const updateDoc = {
         $inc: {
-            votes: 1
+            upvotes: 1
         },
     };
     const result = await Question.updateOne(filter, updateDoc);
@@ -85,7 +85,7 @@ export const downvoteQuestion = async (req, res) => {
     const filter = { title: title };
     const updateDoc = {
         $inc: {
-            votes: -1
+            downvotes: -1
         },
     };
     const result = await Question.updateOne(filter, updateDoc);
