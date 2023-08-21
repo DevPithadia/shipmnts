@@ -20,9 +20,9 @@ const questionSchema = mongoose.Schema({
     votes: {
         type: Number,
     },
-    answers: [{
-        type: mongoose.Schema.Types.ObjectId, ref: 'Answer'
-    }]
+    answers: {
+        type: String
+    }
 });
 
 export const Question = mongoose.model("Question", questionSchema);

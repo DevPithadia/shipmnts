@@ -94,3 +94,23 @@ export const downvoteQuestion = async (req, res) => {
         message: "Question downvoted successfully"
     });
 }
+
+export const writeAnswer = async (req, res) => {
+    const { title, answerContent } = req.body;
+    const question = await Question.findOne({ title });
+    if (!question) return res.status(404).json({
+        success: false,
+        message: "No such question found"
+    });
+    const filter = { title: title };
+    const updateDoc = {
+        $push: {
+            answers: answerContent
+        },
+    };
+    const result = await Question.updateOne(filter, updateDoc);
+    res.status(200).json({
+        success: true,
+        message: "Answer added successfully"
+    });
+}
