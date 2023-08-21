@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 import { getMyProfile, login, logout, register } from "./controllers/User.js";
 import { isAuthenticated } from "./middlewares/auth.js";
 import cors from "cors";
-import { createQuestion, deleteQuestion, downvoteQuestion, getQuestions, updateQuestion, upvoteQuestion, writeAnswer } from "./controllers/Home.js";
+import { createQuestion, deleteQuestion, downvoteQuestion, getQuestionByUpvotes, getQuestions, updateQuestion, upvoteQuestion, writeAnswer } from "./controllers/Home.js";
 
 const app = express();
 
@@ -39,3 +39,4 @@ app.get("/deleteQuestion", deleteQuestion);
 app.post("/upvoteQuestion", upvoteQuestion);
 app.post("/downvoteQuestion", downvoteQuestion);
 app.post("/writeAnswer", writeAnswer);
+app.get("/getQuestionsByUpvotes", getQuestionByUpvotes);

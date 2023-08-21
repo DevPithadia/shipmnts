@@ -1,4 +1,4 @@
-import { Answer, Answer } from "../models/Answer.js";
+import { Answer } from "../models/Answer.js";
 import { Question } from "../models/Question.js"
 
 export const getQuestions = async (req, res) => {
@@ -8,6 +8,13 @@ export const getQuestions = async (req, res) => {
     } catch (e) {
         res.status(500).json({ error: e.message })
     }
+}
+
+export const getQuestionByUpvotes = async (req, res) => {
+    const query = {};
+    const sort = { upvotes: -1 };
+    const questions = await Question.find(query).sort(sort);
+    res.json(questions)
 }
 
 export const createQuestion = async (req, res) => {
